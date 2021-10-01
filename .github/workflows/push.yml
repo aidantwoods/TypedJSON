@@ -1,0 +1,10 @@
+name: Swift
+on: [push]
+jobs:
+  build:
+    name: Unit Tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: swift test
