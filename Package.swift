@@ -17,9 +17,7 @@ let package = Package(
         ),
         .testTarget(
             name: "TypedJSONTests",
-            dependencies: ["TypedJSON"],
-            resources: [
-            ]
+            dependencies: ["TypedJSON"]
         ),
     ],
     swiftLanguageVersions: [.v5]
