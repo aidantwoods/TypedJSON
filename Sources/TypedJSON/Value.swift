@@ -20,7 +20,7 @@ extension JSON.Value {
              * This is a bit of a hack, and might be necessary to remove this in
              * future depending on how JSONSerialization evolves.
              *
-             * This detection is based on NSNumber returning a distingishable subclass
+             * This detection is based on NSNumber returning a distinguishable subclass
              * when a boolean is used to construct it. For so long as that remains
              * true this detection will continue to work.
              */
