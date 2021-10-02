@@ -71,6 +71,49 @@ class JSONTests: XCTestCase {
         XCTAssertEqual([2], decoded.baz)
     }
 
+    func testDictSubscript() throws {
+        let jsonData = """
+        {"foo":"bar","baz":[2]}
+        """.data(using: .utf8)!
+
+        let decoded = try JSON.decode(jsonData)
+
+        XCTAssertEqual("bar", decoded["foo"])
+        XCTAssertEqual([2], decoded.baz)
+    }
+
+    func testDictSubscript2() throws {
+        let jsonData = """
+        {"foo":{"bar":{"baz":"boo"}},"baz":[2]}
+        """.data(using: .utf8)!
+
+        let decoded = try JSON.decode(jsonData)
+
+        XCTAssertEqual("boo", decoded["foo"]?["bar"]?["baz"])
+        XCTAssertEqual([2], decoded.baz)
+    }
+
+    func testArraySubscript() throws {
+        let jsonData = """
+        {"foo":"bar","baz":[2]}
+        """.data(using: .utf8)!
+
+        let decoded = try JSON.decode(jsonData)
+
+        XCTAssertEqual(2, decoded.baz?[0])
+        XCTAssertEqual([2], decoded.baz)
+    }
+
+    func testArraySubscript2() throws {
+        let jsonData = """
+        [[],[[],[],["foo"]]]
+        """.data(using: .utf8)!
+
+        let decoded = try JSON.decode(jsonData)
+
+        XCTAssertEqual("foo", decoded[1]?[2]?[0])
+    }
+
     func testEncoder() throws {
         let expected = """
         {"baz":[true],"foo":"bar"}

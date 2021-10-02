@@ -23,6 +23,24 @@ public extension JSON.Container {
 }
 
 public extension JSON.Container {
+    subscript(index: Int) -> Value? {
+        if case .Array(let arr) = self {
+            return index < arr.count ? arr[index] : nil
+        }
+
+        return nil
+    }
+
+    subscript(key: String) -> Value? {
+        if case .Dictionary(let dict) = self {
+            return dict[key]
+        }
+
+        return nil
+    }
+}
+
+public extension JSON.Container {
     init (encoded jsonData: Data) throws {
         try self.init(JSONSerialization.jsonObject(with: jsonData))
     }

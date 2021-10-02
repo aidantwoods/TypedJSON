@@ -50,6 +50,24 @@ extension JSON.Value {
     }
 }
 
+public extension JSON.Value {
+    subscript(index: Int) -> Value? {
+        if case .Container(let container) = self {
+            return container[index]
+        }
+
+        return nil
+    }
+
+    subscript(key: String) -> Value? {
+        if case .Container(let container) = self {
+            return container[key]
+        }
+
+        return nil
+    }
+}
+
 extension JSON.Value:
     ExpressibleByIntegerLiteral,
     ExpressibleByStringLiteral,
