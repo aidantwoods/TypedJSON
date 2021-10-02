@@ -6,7 +6,7 @@ public enum JSON {
         case Array([Value])
         case Dictionary([String: Value])
 
-        subscript(dynamicMember member: String) -> Value? {
+        public subscript(dynamicMember member: String) -> Value? {
             if case .Dictionary(let dict) = self {
                   return dict[member]
             }
