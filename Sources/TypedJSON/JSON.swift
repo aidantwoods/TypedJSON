@@ -21,12 +21,21 @@ public enum JSON {
      * Apple's documentation notably omits the boolean case, and does not distinguish numbers by type.
      * The boolean case is detectable by examining types at runtime.
      */
+    @dynamicMemberLookup
     public enum Value: Equatable {
         case Container(Container)
         case String(String)
         case Number(NSNumber)
         case Bool(Bool)
         case Null
+
+        public subscript(dynamicMember member: String) -> Value? {
+            if case .Container(let container) = self {
+                return container[dynamicMember: member]
+            }
+
+            return nil
+        }
     }
 
     public enum Exception: Error {

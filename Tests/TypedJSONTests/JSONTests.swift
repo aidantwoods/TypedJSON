@@ -60,6 +60,17 @@ class JSONTests: XCTestCase {
         XCTAssertEqual([2], decoded.baz)
     }
 
+    func testDynamic2() throws {
+        let jsonData = """
+        {"foo":{"bar":{"baz":"boo"}},"baz":[2]}
+        """.data(using: .utf8)!
+
+        let decoded = try JSON.decode(jsonData)
+
+        XCTAssertEqual("boo", decoded.foo?.bar?.baz)
+        XCTAssertEqual([2], decoded.baz)
+    }
+
     func testEncoder() throws {
         let expected = """
         {"baz":[true],"foo":"bar"}
