@@ -3,14 +3,16 @@
 If you can, JSON parsing with `Codable` is very nice.
 
 Sometimes it is necessary to make sense of unknown JSON structures, for these cases it is necessary
-to use `JSONSerialization` and attempt to downcast various types. Unfortunately, this makes use of
-the `Any` type, which does not provide much guidance through the type system as the the expected
+to use `JSONSerialization` and attempt to downcast to various types. Unfortunately, this makes use
+of the `Any` type, which does not provide much guidance through the type system as the the expected
 structure.
 
 ## Structure
 
 TypedJSON aims to add some of this structure back, as well as some convenience through the use of
-`@dynamicMemberLookup`.
+`@dynamicMemberLookup`. Some inspiration taken from `JSON` as defined in [SE-0195][SE-0195].
+
+[SE-0195]: https://github.com/apple/swift-evolution/blob/master/proposals/0195-dynamic-member-lookup.md#example-usage
 
 There are two core types introduced, `JSON.Container` and `JSON.Value`. Their simplified
 definitions are as follows:
