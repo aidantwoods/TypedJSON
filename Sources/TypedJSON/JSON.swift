@@ -18,7 +18,7 @@ public enum JSON {
     /**
      * JSON.Value is based on the types that may be returned from JSONSerialization.
      *
-     * Apple's documentation notably omits the boolean case, and does not distigish numbers by type.
+     * Apple's documentation notably omits the boolean case, and does not distinguish numbers by type.
      */
     public enum Value: Equatable {
         case Container(Container)
