@@ -3,9 +3,9 @@ import Foundation
 extension JSON.Value {
     public init (_ jsonBlob: Any) throws {
         switch jsonBlob {
-        case let arr as Array<Any>:
+        case let arr as [Any]:
             self = .Container(.Array(try arr.map{try JSON.Value($0)}))
-        case let dict as Dictionary<String, Any>:
+        case let dict as [String: Any]:
             self = .Container(.Dictionary(try dict.mapValues{try JSON.Value($0)}))
 
         case let str as String: self = .String(str)

@@ -3,8 +3,8 @@ import Foundation
 public enum JSON {
     @dynamicMemberLookup
     public enum Container: Equatable {
-        case Array(Array<Value>)
-        case Dictionary(Dictionary<String, Value>)
+        case Array([Value])
+        case Dictionary([String: Value])
 
         subscript(dynamicMember member: String) -> Value? {
             if case .Dictionary(let dict) = self {
