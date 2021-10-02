@@ -16,6 +16,13 @@ extension JSON.Value {
              * on an undocumented implementation detail, not a great idea to depend on.
              *
              * Here we detect if num: NSNumber is actually a boolean.
+             *
+             * This is a bit of a hack, and might be necessary to remove this in
+             * future depending on how JSONSerialization evolves.
+             *
+             * This detection is based on NSNumber returning a distingishable subclass
+             * when a boolean is used to construct it. For so long as that remains
+             * true this detection will continue to work.
              */
             if let bool = num as? Bool, type(of: num) == type(of: NSNumber(booleanLiteral: true)) {
                 self = .Bool(bool)
