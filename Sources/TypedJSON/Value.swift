@@ -9,7 +9,21 @@ extension JSON.Value {
             self = .Container(.Dictionary(try dict.mapValues{try JSON.Value($0)}))
 
         case let str as String: self = .String(str)
-        case let num as NSNumber: self = .Number(num)
+        case let num as NSNumber:
+            /**
+             * Swift's JSONSerialization does not decode booleans as Bool, these are
+             * mapped to NSNumber. These can theoretically be distinguished. This relies
+             * on an undocumented implementation detail, not a great idea to depend on.
+             *
+             * Here we detect if num: NSNumber is actually a boolean.
+             */
+            if let bool = num as? Bool, type(of: num) == type(of: NSNumber(booleanLiteral: true)) {
+                self = .Bool(bool)
+                break
+            }
+
+            self = .Number(num)
+
         case _ as NSNull: self = .Null
         default:
             throw JSON.Exception.invalidObject(
@@ -22,6 +36,7 @@ extension JSON.Value {
         switch self {
         case .Container(let container): return container.blob()
         case .String(let str): return str
+        case .Bool(let bool): return bool
         case .Number(let num): return num
         case .Null: return NSNull()
         }
@@ -59,16 +74,8 @@ extension JSON.Value:
         self = .Number(NSNumber(floatLiteral: value))
     }
 
-    /**
-     * Swift's JSONSerialization does not decode booleans as Bool, these are
-     * mapped to NSNumber. These can theoretically be distigished, however
-     * it relies on an undocumented implementation detail, which does not seem
-     * like a great idea to depend upon.
-     * Here we commit the same foolishness as JSONSerialization and map a
-     * Bool to NSNumber.
-     */
     public init (booleanLiteral value: BooleanLiteralType) {
-        self = .Number(NSNumber(booleanLiteral: value))
+        self = .Bool(value)
     }
 
     public init (nilLiteral: ()) {
